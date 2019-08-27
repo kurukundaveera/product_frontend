@@ -16,12 +16,12 @@ send=()=>{
                 <div className="main">
                     <ul>
                         <li><img src={ing} width="100px" height="100px"/></li>
-                        <li className="titlespace"><h2 className="title">ING Products OverView Screen</h2></li>
+                        <li className="titlespace"><h2 className="title">ING Products OverView </h2></li>
                     </ul>
                 </div>
             
                 <div className="header-right">
-                    <Link to='/productGroup'><img src={home} className="logo" height="50px" width="50px"/></Link>
+                    <Link to='/listOfProducts'><img src={home} className="logo" height="50px" width="50px"/></Link>
                     <Link to='/graph'><button className="btn btn-outline-primary"><b>Dashboard</b></button></Link>
                     <Link to='/fileUpload'><button className="btn btn-outline-primary"><b>UPLOAD</b></button></Link>
                     

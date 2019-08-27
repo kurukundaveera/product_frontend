@@ -1,5 +1,6 @@
 import React from 'react'
 import axios, { post } from 'axios';
+import swal from 'sweetalert'
 
 class FileUpload extends React.Component {
 
@@ -10,35 +11,29 @@ class FileUpload extends React.Component {
     }
     this.onFormSubmit = this.onFormSubmit.bind(this)
     this.onChange = this.onChange.bind(this)
-    this.fileUpload = this.fileUpload.bind(this)
-  }
-  onFormSubmit(e){
-    e.preventDefault() // Stop form submit
-    this.fileUpload(this.state.file).then((response)=>{
-      console.log(response.data);
-    })
   }
   onChange(e) {
     this.setState({file:e.target.files[0]})
   }
-  fileUpload(file){
-    const url = 'http://example.com/file-upload';
-    const formData = new FormData();
-    formData.append('file',file)
-    const config = {
-        headers: {
-            'content-type': 'multipart/form-data'
-        }
-    }
-    return  post(url, formData,config)
+  onFormSubmit(e){
+    e.preventDefault() // Stop form submit
+    console.log(this.state.file.name);
+    var data=new FormData();
+    data.append('file',this.state.file)
+    axios.post('http://10.117.189.127:9090/bankproduct/api/import',data).then((response)=>{
+        console.log(response);
+        swal("file uploaded successfully");
+        this.props.history.push('/listOfProducts');   
+    }).catch((error)=>{
+        console.log(error);
+    });
   }
-
   render() {
     return (
-      <form onSubmit={this.onFormSubmit}>
+      <form onSubmit={this.onFormSubmit} enctype="multipart/form-data">
         <h1>File Upload</h1>
         <input type="file" onChange={this.onChange} />
-        <button className="btn btn-outline-primary" type="submit">Upload</button>
+        <button className="btn btn-outline-primary" type="submit" value="import">Upload</button>
       </form>
    )
   }

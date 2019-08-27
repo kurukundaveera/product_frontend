@@ -9,6 +9,7 @@ export class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            productName:localStorage.getItem("productName"),
             buyProducts:{
                 customerName: '',
                 mobileNumber: '',
@@ -47,16 +48,20 @@ export class Login extends Component {
             <div>
           <div className="box">
               <h3 align="center" className="h1">Buy Products</h3>
+              
               <table align="center" className="table table- striped">
                   <tbody>
               <tr>
-                    
+                    <td> PRODUCT NAME:</td>
+                    <td><input type="text"   value={this.state.productName} id="productName" name="productName" /></td>
+                </tr>
+                <tr>
                     <td>CUSTOMER NAME:</td>
                     <td><input type="text"  placeholder="Enter the  customer Name"  id="customerName" name="customerName" required="yes" onChange={this.handleChange} /></td>
                 </tr>
                 <tr>
                     
-                    <td>CUSTOMER NAME:</td>
+                    <td>MOBILE NUMBER:</td>
                     <td><input type="number"  placeholder="Enter the  mobile number"  id="mobileNumber" name="mobileNumber" required="yes" onChange={this.handleChange} /></td>
                 </tr>
                 <tr>
