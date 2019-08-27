@@ -2,6 +2,8 @@
 import React, { Component } from 'react'
 
 import axios from 'axios';
+import swal from 'sweetalert'
+
 
 import './BuyProducts.css'
 
@@ -11,6 +13,7 @@ export class Login extends Component {
         this.state = {
             productName:localStorage.getItem("productName"),
             buyProducts:{
+                productId:localStorage.getItem("productId"),
                 customerName: '',
                 mobileNumber: '',
                 emailId:'',
@@ -21,7 +24,7 @@ export class Login extends Component {
            
         }
         this.handleChange = this.handleChange.bind(this);
-        this.handleLoginSubmit = this.handleLoginSubmit.bind(this)
+        this.handleBuyProduct = this.handleBuyProduct.bind(this)
     }
 
     handleChange = (event) => {
@@ -31,10 +34,11 @@ export class Login extends Component {
 
     }
 
-    handleLoginSubmit = (e) => {
+    handleBuyProduct = (e) => {
         e.preventDefault();
         const { buyProducts } = this.state;   
-        axios.post('',buyProducts).then((response)=>{
+        axios.post('http://10.117.189.127:9090/bankproduct/api/buy',buyProducts).then((response)=>{
+            swal("product bought successfully");
             console.log(response);
         }).catch((error)=>{
             console.log(error);
@@ -77,11 +81,11 @@ export class Login extends Component {
                 <tr>
                     
                     <td>QUANTITY :</td>
-                    <td><input type="password"  placeholder="enter the quantity"  id="quantity" name="quantity" required="yes" onChange={this.handleChange} /></td>
+                    <td><input type="number"  placeholder="enter the quantity"  id="quantity" name="quantity" required="yes" onChange={this.handleChange} /></td>
                 </tr>
                 <tr>
-                    <td><button   className="btn btn-primary bbb" id="btn1" onClick={this.handleBuyProduct}>Buy Product</button></td>
-                    <td><button className="btn btn-primary " id="btn2" type="reset"  value="cancel" onClick={this.cancel}>Cancel</button></td>
+                    <td><button    className="btn btn-primary bbb" id="btn1" onClick={this.handleBuyProduct}>Buy Product</button></td>
+                    <td><button   className="btn btn-primary " id="btn2" type="reset"  value="cancel" onClick={this.cancel}>Cancel</button></td>
                 </tr>
                 </tbody>
               </table>

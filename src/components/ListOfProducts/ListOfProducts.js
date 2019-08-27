@@ -1,15 +1,11 @@
 import React,{Component} from 'react';
 
 import axios from 'axios';
-import {
-    Accordion,
-    AccordionItem,
-    AccordionItemHeading,
-    AccordionItemPanel,
-    AccordionItemButton,
-} from 'react-accessible-accordion';
-import 'react-accessible-accordion/dist/fancy-example.css';
+
 import './ListOfProducts.css';
+import Accordion from 'react-bootstrap/Accordion';
+import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
 
 class ProductGroup extends Component{
     constructor(props){
@@ -25,14 +21,18 @@ class ProductGroup extends Component{
         var global=this;
         axios.get('http://10.117.189.127:9090/bankproduct/api/products').then((response)=>{
             console.log(response.data);
+            localStorage.setItem("productId",response.data.productId);
+        console.log(response.data.productId);
             global.setState({list:response.data});
         }).catch((error)=>{
             console.log(error);
         })
     }
 
-    handleClick = (item)=> {
+    handleClick = (e,item)=> {
         const{list2}=this.state;
+        var productId=localStorage.getItem("productId");
+        console.log(productId);
         axios.get('http://10.117.189.127:9090/bankproduct/api/product/'+item.productId).then((response)=>{
            console.log(response.data);
            this.setState({list2:response.data});
@@ -40,46 +40,52 @@ class ProductGroup extends Component{
             console.log(err);
         })
     }
-    handleBuyProducts=(item1)=>{
-        localStorage.setItem("productId",item1.productId);
-        localStorage.setItem("productName",item1.productName)
+    handleBuyProducts=(e,item)=>{
+        localStorage.setItem("productId",item.productId);
+        localStorage.setItem("productName",item.productName)
         this.props.history.push('/buyProducts');
     }
+    render() {
+        let list2 = this.state.list2.map((item, i) => {
+            console.log("item", item)
+           return (
+                <div>
 
-    render(){
-        console.log(this.state.list)
-        return(
-          <div  className="box">
-            {this.state.list.map((item,i)=>{
-                return(
-                      <Accordion key={i}>
-                        <AccordionItem>
-                            <AccordionItemHeading onClick={()=>this.handleClick(item)}>
-                                <AccordionItemButton>
-                                    {item.productName}
-                                </AccordionItemButton>
-                            </AccordionItemHeading>
-                            <AccordionItemPanel>
-                                <div>
-                                    {this.state.list2.map((item1,j)=>{
-                                        return(
-                                            <AccordionItemPanel key={j}>
-                                           <div><b>PRODUCT DESCRIPTION:</b>{item1.productDescription}</div> 
-                                            <div><b>PRODUCT NAV</b>:{item1.productNav}</div>
-                                            <div><b>BROKERAGE</b>:{item1.brokerage}%</div>
-                                            <button className="btn  btn-outline-primary"  onClick={()=>this.handleBuyProducts(item1)}>Buy</button>
-                                            </AccordionItemPanel>
-                                        )
-                                    })}
-                                </div>
-                            </AccordionItemPanel>
-                        </AccordionItem>
-                    
+                            <div><b>PRODUCT DESCRIPTION:</b>{item.productDescription}</div> 
+                            <div><b>PRODUCT NAV</b>:{item.productNav}</div>
+                            <div><b>BROKERAGE</b>:{item.brokerage}%</div>
+                     <Button onClick={(e)=>this.handleBuyProducts(e,item)}>Buy</Button> 
+                </div>
+            )
+
+        }, this);
+        let list = this.state.list.map((item, i) => {
+            console.log("item", item)
+            return (
+                <Card>
+                    <Accordion.Toggle className="prodheading" onClick={(e) => { this.handleClick(e, item) }} as={Card.Header} eventKey={item.productId}>
+                        {item.productName}
+                    </Accordion.Toggle>
+                    <Accordion.Collapse eventKey={item.productId}>
+                    <Card.Body>
+                        {list2}
+                    </Card.Body>
+                    </Accordion.Collapse>
+                </Card>
+            )
+        }, this);     
+        return (
+            <div >
+                <h2>List Of Products</h2>
+                <div className="box">
+                    <Accordion >
+                        {list}
                     </Accordion>
-                    )
-                })}
+                </div>
             </div>
         )
-    }
+
+    }  
 }
 export default ProductGroup;
+

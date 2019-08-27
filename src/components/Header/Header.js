@@ -22,7 +22,7 @@ send=()=>{
             
                 <div className="header-right">
                     <Link to='/listOfProducts'><img src={home} className="logo" height="50px" width="50px"/></Link>
-                    <Link to='/graph'><button className="btn btn-outline-primary"><b>Dashboard</b></button></Link>
+                    <Link to='/analysis'><button className="btn btn-outline-primary"><b>Dashboard</b></button></Link>
                     <Link to='/fileUpload'><button className="btn btn-outline-primary"><b>UPLOAD</b></button></Link>
                     
                </div>
