@@ -32,8 +32,8 @@ class FileUpload extends React.Component {
     return (
       <form onSubmit={this.onFormSubmit} enctype="multipart/form-data">
         <h1>File Upload</h1>
-        <input type="file" onChange={this.onChange} />
-        <button className="btn btn-outline-primary" type="submit" value="import">Upload</button>
+        <input type="file" id="file" onChange={this.onChange} />
+        <button  id="btn4" className="btn btn-outline-primary" type="submit" value="import">Upload</button>
       </form>
    )
   }
