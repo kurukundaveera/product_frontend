@@ -177,7 +177,10 @@
     background-color:#010154;
     color:white
   }
-  
+  .title{
+    padding-top:20px;
+    color:white
+  }
   /*button box*/
   
   .box{

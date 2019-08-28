@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import {
   BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
 } from 'recharts';
+import config from '../../config.json';
 
 import axios from 'axios';
 
@@ -37,7 +38,7 @@ export default class DailyAnalysis extends PureComponent {
     getDailyAnalysis = () => {
        
             return new Promise((resolve, reject) => {
-          axios.get('http://10.117.189.127:9090/bankproduct/api/analysys/daily').then((response)=> {
+          axios.get(config.url+'/analysys/daily').then((response)=> {
             resolve(response);
           console.log(response);
           }).catch((error)=> {
@@ -48,7 +49,7 @@ export default class DailyAnalysis extends PureComponent {
       getWeeklyAnalysis = () => {
        
         return new Promise((resolve, reject) => {
-      axios.get('http://10.117.189.127:9090/bankproduct/api/analysys/Weekly').then((response)=> {
+      axios.get(config.url+'/analysys/Weekly').then((response)=> {
         resolve(response);
       console.log(response);
       }).catch((error)=> {
@@ -59,7 +60,7 @@ export default class DailyAnalysis extends PureComponent {
   getMonthlyAnalysis = () => {
        
     return new Promise((resolve, reject) => {
-  axios.get('http://10.117.189.127:9090/bankproduct/api/analysys/monthly').then((response)=> {
+  axios.get(config.url+'/analysys/monthly').then((response)=> {
     resolve(response);
   console.log(response);
   }).catch((error)=> {
@@ -71,10 +72,10 @@ export default class DailyAnalysis extends PureComponent {
   render() {
     return (
         <div ><h1>MUTUAL FUND ANALYSIS </h1>
-      <div>
+      <div align="center">
           <h4>DAILY ANALYSIS</h4>
       <BarChart
-        width={500}
+        width={700}
         height={300}
         data={this.state.dailyAnalysis}
         margin={{
@@ -82,17 +83,17 @@ export default class DailyAnalysis extends PureComponent {
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="productName" />
+        <XAxis dataKey="productName"  />
         <YAxis />
         <Tooltip />
         <Legend />
-        <Bar dataKey="productId" fill="#8884d8" />
+        <Bar dataKey="count" fill="#010D3E" />
       </BarChart>
       </div>
-      <div>
+      <div align="center">
           <h4>WEEKLY ANALYSIS</h4>
       <BarChart
-        width={500}
+        width={700}
         height={300}
         data={this.state.weeklyAnalysis}
         margin={{
@@ -104,13 +105,13 @@ export default class DailyAnalysis extends PureComponent {
         <YAxis />
         <Tooltip />
         <Legend />
-        <Bar dataKey="productId" fill="#8884d8" />
+        <Bar dataKey="count" fill="#010D3E" />
       </BarChart>
       </div>
-      <div>
+      <div align="center">
           <h4>MONTHLY ANALYSIS</h4>
       <BarChart
-        width={500}
+        width={700}
         height={300}
         data={this.state.monthlyAnalysis}
         margin={{
@@ -122,7 +123,7 @@ export default class DailyAnalysis extends PureComponent {
         <YAxis />
         <Tooltip />
         <Legend />
-        <Bar dataKey="productId" fill="#8884d8" />
+        <Bar dataKey="count" fill="#010D3E" />
       </BarChart>
       </div>
       </div>

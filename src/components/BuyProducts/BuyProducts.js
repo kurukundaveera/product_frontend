@@ -3,8 +3,7 @@ import React, { Component } from 'react'
 
 import axios from 'axios';
 import swal from 'sweetalert'
-
-
+import config from '../../config.json';
 import './BuyProducts.css'
 
 export class Login extends Component {
@@ -37,8 +36,9 @@ export class Login extends Component {
     handleBuyProduct = (e) => {
         e.preventDefault();
         const { buyProducts } = this.state;   
-        axios.post('http://10.117.189.127:9090/bankproduct/api/buy',buyProducts).then((response)=>{
+        axios.post(config.json+'/buy',buyProducts).then((response)=>{
             swal("product bought successfully");
+            this.props.history.push('/analysis');
             console.log(response);
         }).catch((error)=>{
             console.log(error);
@@ -49,8 +49,8 @@ export class Login extends Component {
     render() {
 
         return(
-            <div>
-          <div className="box">
+            <div className="row">
+          <div className="box col-md-6 col-sm-12">
               <h3 align="center" className="h1">Buy Products</h3>
               
               <table align="center" className="table table- striped">
